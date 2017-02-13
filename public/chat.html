@@ -1,0 +1,38 @@
+ <!-- this will be the upper layout -->
+ <div class="upper_layout">
+   	<div class="col-sm-12" ng-repeat = "msg in chatList">
+		<div class="col-sm-3" ></div>
+		<div class="col-sm-6" >
+			<div class="row">
+				<div class="col-sm-12">
+					<div  ng-class="{chat_name1: my_name == msg.name, chat_name2 : msg.name != my_name}">
+						{{msg.name}}
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<div  id = "chat_message" ng-class="{my_msg : my_name == msg.name, other_msg : msg.name != my_name}">		
+						{{msg.message}}
+					</div>
+				</div>
+			</div>
+			
+		</div>
+
+        <div class="col-sm-3" ></div>
+	</div>
+	
+ </div>           
+          	
+<!-- this is the bottom layout -->
+<div class="bottom_layout">    
+ 	<div class="row">
+ 		<div class="col-sm-6 col-sm-offset-3">
+ 			<div class="input_container">
+ 				<input id="input2" ng-model="m" autocomplete="off" placeholder="Say something..."/>
+ 				<img src="/images/send.svg" ng-click="sendChatMessage()" height="20">
+ 			</div>
+ 		</div>
+ 	</div>                         
+</div>   
