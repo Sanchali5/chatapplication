@@ -1,22 +1,74 @@
 var app = angular.module('myApp', ["ngRoute"]);
+app.directive('onEnter', function() {
+    return function(scope, element, attrs) {
+        element.bind("keydown", function(event) {
+            if(event.which === 13) {
+                scope.$apply(function(){
+                    scope.$eval(attrs.onEnter, {'event': event});
+                });
+                event.preventDefault();
+            }
+        });
+    };
+});
 app.config(function($routeProvider, $locationProvider)
 {
-    // lemme check the syntaxsure
+    // runit
    $routeProvider
-        .when("/",{
-            templateUrl:"template.html", //after every attribute..?
-            controller:"TemplateController"
+        .when("/signup",{
+            templateUrl:"/signup.html",
+            controller:"SignupController"
         })
+        .when("/",{
+            templateUrl:"/template.html",
+            controller:"TemplateController"
+      
+        })
+        .when("/friend",{
+            templateUrl:"/friend.html",
+            controller:"FriendController"
+      
+        })
+        
       
         .when("/chatroom",{
             templateUrl:"/chat.html",
             controller:"ChatController"
       
         });
- // this tells angular to not to use #!
+ // ei gulo angular e route..means..frontend e virtual routes...okay 
 });
+app.controller("SignupController",function ($scope, $http)
+{
+    // line wise code ta bojha amay
+    $scope.signup = function(){
+        var data = {//object data created
+             username: $scope.username,// attributes are extracted from the one the user inputs
+             pass: $scope.pass            
+        };
 
+        $http.post('/signup',data).then(function(response){ //ajax request from frontend to backend
+            console.log(response);
+            window.location='/'; // cool..validation and all pore kore nish ok 
 
+        },function(error){
+            
+            console.log(error);
+
+        });
+
+    };
+});
+app.controller("FriendController",function ($scope)
+{
+    /*
+    so ekhane u want to display a list right? yo
+    users er list ta kotha theke aashbe? db theke
+    db k ke use kore? user ra -__-  server
+    so..aage toke serber/backend k request korte hobe..ki users er list ta deben hrieghth?Ehhhee yo r8
+    so aage backend e ekta route banate hobe jeta ekhane request korbi right? yo backend e ekta route bana name it something like /fetch/users opo ?  ki ?backend e rout
+    */
+});
 app.controller("ChatController",function ($scope)
 {
 	$scope.chatList = [];
@@ -25,11 +77,8 @@ app.controller("ChatController",function ($scope)
 	$scope.socket = io(); 
     $scope.my_name =localStorage.getItem('key1'); 
 
-    $scope.sendChatMessage = function(){//defining the send function yeaa
-        // abbe!! XD XD XD
-        // ota bas show korche na..but ei list e jaache...if u console this chatList..ota thakbe...ekhane ekta if statment er modhe kor..
-        // if there is some text in the $scope.m then run the below code i hate to work in this page worlolololllo
-        // aami ki bolbo bol eta te kichu na ok kora rc tc chaar taale kano kobo ami to emni bollam ok..kalke korish...aajke pls shue ja shue ja hoyna shue por hoy ok i will but ekhn na ghum pachena..taale lappy chalashna..emni shue thak ..rest neoukay thanks and sorRy i slept..hm koi ni
+    $scope.sendChatMessage = function(){
+        //der? dekhli nato
         var newMsg = new Object();
         newMsg.name = $scope.my_name;
         newMsg.message = $scope.m;
@@ -49,14 +98,17 @@ app.controller("ChatController",function ($scope)
         $scope.$apply();
     });
 
+
 });
 app.controller("TemplateController",function ($scope,$rootScope)
 {
     $scope.my_name=""; 
-    
+     $scope.my_pass=""; 
+    // acha eta bol..signup page ta kon page theke khola uchit?homepage ei signyp ba login er option thaka uch
     $scope.next=function(){
         localStorage.setItem('key1',$scope.my_name);
+        localStorage.setItem('key2',$scope.my_pass);
         // jaa ebar redirect kora
-        window.location='/#!/chatroom'; 
+        window.location='/#!/friend'; 
     };
  });

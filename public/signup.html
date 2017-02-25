@@ -1,0 +1,16 @@
+<div >
+		<div class="style2">
+		    <form action ="/signup" method = "post"> 	
+				<input  id="input1" name="username" placeholder="username." ng-model="username">	
+				</br></br> 
+				<input  id="input1" name="pass" ng-model="pass" placeholder="password." >	   	
+				</br></br>
+
+				<input  id="input1" name="cpass"  placeholder="confirm-password." ng-model="rpass" ng-match="pass" >
+				<br></br>
+				<button type="button" class="btn btn-success btn-lg btn-block" ng-click = "signup()">Signup</button>
+			    <span data-ng-show="rpass.$error.match">Emails have to match!</span>
+              </form>
+		 </div>
+
+ </div>
