@@ -1,9 +1,20 @@
+<div id="friendsheader"> 
+      <div class="panel-heading">Friends</div>
+      
+    </div>
 
-  <ul ng-repeat="user in lists">
+<div class="row">
+	<div class="col-md-6 col-md-offset-3">
+		<ul ng-repeat="user in lists" >
+		  	<div id="friends"> 
+		    	<div>
+		        	<div  ng-click="choose_friend(user)">
+		            	 {{user.username}}
+		            </div>
+		    	</div>
+			</div>	    
+		</ul>     		
+	</div>
 
-    <li> 
-    	<div ng-click="choose_friend(user)">
-		    {{user.username}}
-    	</div>
-    </li>
-  </ul>     
+</div> 
+

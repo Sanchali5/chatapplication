@@ -22,7 +22,7 @@ var connection = mysql.createConnection({
 	
 connection.connect();
 app.use(express.static('public')); 
-var port = process.env.PORT || 8975; // dekha
+var port = process.env.PORT || 8052; // dekha bar bar port kano change korish...error ascle change kore dish ok
 
 app.get('/', function (req, res){       
   res.sendfile('index.html');
@@ -32,11 +32,36 @@ app.get('/', function (req, res){
 routes.init(app,connection); // ei function ta ekhon routes object er modhe
 
 io.on('connection', function(socket){
-  // 
-  socket.on('socket_key', function(msg){
+  //  
+  socket.on('socket_key', function(msg){ 
+
+    var chat = {
+      // ekahne notun kore bana...take attributes values from msg ok thankyou
+      rid:msg.rid,
+      sid:msg.sid,
+      msg:msg.msg //eta k korbe? ouu sob kichu dekhe korte hoye oaakto chonchol hote nei..raat o to onek hoeche brain jamm hoe geche 
+      // haha..aare...tale korchish kano..kal kor na icche korche ektu interesting lagche aaj bas aajke ei moto hi rakh
+       // naa please output ta dekhe ghumabo ok
+       
+    };
+    console.log(msg.rid);
+
+      connection.query('insert into chat set ?', chat, function (err,result){
+        if(err) {
+          console.error(err);
+          return;
+        }
+        console.error(result);
+       });
   		io.emit(msg.rid,msg);
-  		io.emit(msg.sid,msg);
+  	  io.emit(msg.sid,msg);
+
+
+      //save the msg in the database whose column id matches msg.rid and msg.sid
+      //msg can be rmsg or smsg
+      //columns in the table id,username,pass,smsg,rmsg
   });
+
 }); 
 
 server.listen(port, function(){

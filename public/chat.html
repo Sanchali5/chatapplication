@@ -5,15 +5,19 @@
 		<div class="col-sm-6" >
 			<div class="row">
 				<div class="col-sm-12">
-					<div  ng-class="{chat_name1: my_name == msg.name, chat_name2 : msg.name != my_name}">
-						{{msg.name}}
+					<div  ng-class="{chat_name1: my_name == msg.username, chat_name2 : msg.username != my_name}">
+
+						
+						{{msg.username}}
 					</div>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12">
-					<div  id = "chat_message" ng-class="{my_msg : my_name == msg.name, other_msg : msg.name != my_name}">		
-						{{msg.message}}
+					<div  id = "chat_message" ng-class="{my_msg : my_name == msg.username, other_msg : msg.username != my_name}">	
+
+									<!-- check for the ng class using if and then make the message rmsg or smsg-->	
+						{{msg.msg}}
 					</div>
 				</div>
 			</div>
